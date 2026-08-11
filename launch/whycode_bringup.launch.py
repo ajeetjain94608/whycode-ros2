@@ -1,3 +1,5 @@
+import os
+
 from launch import LaunchDescription
 from launch_ros.actions import Node
 
@@ -21,7 +23,8 @@ def generate_launch_description():
                 'camera_frame_id': 'usb_cam',
                 'av_device_format': 'YUV422P',
                 'camera_name': 'narrow_stereo',
-                'camera_info_url': 'file:///home/jainajeet29/.ros/camera_info/camera_info.yaml',
+                # portable across users/machines (no hardcoded home dir)
+                'camera_info_url': f'file://{os.path.expanduser("~")}/.ros/camera_info/camera_info.yaml',
             }]
         ),
 
