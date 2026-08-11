@@ -41,7 +41,7 @@ def generate_launch_description():
                 'hamming_dist': 1,
                 'num_markers': 1,         # max markers to detect simultaneously
                 'use_gui': True,           # MUST be true, or debug_image is not published
-                'min_size': 20,
+                'min_size': 400,
                 'calib_file': '',          # empty = camera-relative pose
                 'coords_method': 0,
             }]
