@@ -145,7 +145,6 @@ CWhycodeROSNode::CWhycodeROSNode()
   whycode_->set_parameters(why_params);
 
   on_set_parameters_callback_handle_ = this->add_on_set_parameters_callback(std::bind(&CWhycodeROSNode::validate_upcoming_parameters_callback, this, _1));
-  post_set_parameters_callback_handle_ = this->add_post_set_parameters_callback(std::bind(&CWhycodeROSNode::react_to_updated_parameters_callback, this, _1));
 
   img_pub_ = image_transport::create_publisher(this, "~/debug_image");
   markers_pub_ = this->create_publisher<whycode_interfaces::msg::MarkerArray>("~/markers", 1);
@@ -269,6 +268,12 @@ rcl_interfaces::msg::SetParametersResult CWhycodeROSNode::validate_upcoming_para
         result.reason = "The coordinates calibration is not available. Load or perform calibration.";
       }
     }
+  }
+
+  // Humble has no post-set-parameters callback; react to the update here once validation succeeds,
+  // matching what add_post_set_parameters_callback would have done on later distros.
+  if (result.successful) {
+    react_to_updated_parameters_callback(parameters);
   }
 
   return result;

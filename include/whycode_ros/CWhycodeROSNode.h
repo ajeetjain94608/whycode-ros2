@@ -63,7 +63,9 @@ private:
   // parameters
   Parameters node_params_;
   rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr   on_set_parameters_callback_handle_;
-  rclcpp::node_interfaces::PostSetParametersCallbackHandle::SharedPtr post_set_parameters_callback_handle_;
+  // Note: rclcpp on ROS2 Humble has no add_post_set_parameters_callback API (added in later distros).
+  // react_to_updated_parameters_callback() is invoked directly from validate_upcoming_parameters_callback()
+  // below instead, once validation succeeds.
 
   // subscribers
   image_transport::Subscriber img_sub_;
