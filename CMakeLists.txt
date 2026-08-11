@@ -1,4 +1,7 @@
 cmake_minimum_required(VERSION 3.28.3)
+if(POLICY CMP0148)
+  cmake_policy(SET CMP0148 OLD)  # compat: ROS2 Humble's rosidl_generator_py needs the legacy FindPythonInterp module
+endif()
 
 project(whycode)
 
